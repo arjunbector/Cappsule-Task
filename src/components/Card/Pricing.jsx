@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import NotAvailable from "./NotAvailable";
 
-const Pricing = ({price}) => {
+const Pricing = ({ price }) => {
   return (
-    <h1 className='font-bold text-2xl   '>
-      From ₹{price}
-    </h1>
-  )
-}
+    <>
+      {price && <h1 className="font-bold text-2xl   ">From ₹{price}</h1>}
+      {!price && <NotAvailable />}
+    </>
+  );
+};
 
-export default Pricing
+export default Pricing;

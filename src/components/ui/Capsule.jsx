@@ -1,8 +1,8 @@
-const Capsule = ({ variant, disabled, onClick }) => {
+const Capsule = ({ variant, disabled, onClick, text }) => {
   return (
     <button
       disabled={disabled}
-      className={`px-3 mx-1 rounded-lg font-semibold text-sm
+      className={`px-3 rounded-lg font-semibold text-sm
         ${
           variant === "primary" &&
           "bg-primary custom-shadow-capsule border border-black"
@@ -13,7 +13,7 @@ const Capsule = ({ variant, disabled, onClick }) => {
         }`}
       onClick={onClick}
     >
-      Tablet
+      {text || "Dumy"}
     </button>
   );
 };
