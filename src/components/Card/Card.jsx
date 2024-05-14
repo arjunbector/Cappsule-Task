@@ -114,7 +114,7 @@ const Card = ({ salt }) => {
       initial={{ opacity: 0, y: 100 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px" }}
-      className="flex items-center justify-between custom-shadow rounded-lg p-6 bg-gradient-to-r from-white to-primary-aqua to-[450%]"
+      className="flex items-center justify-between custom-shadow rounded-lg p-6 bg-gradient-to-r from-white to-primary-aqua to-[1000%]"
     >
       <div className="flex flex-col gap-5 w-1/3 text-sm">
         <Options category="Form" options={forms} />
