@@ -25,7 +25,7 @@ function App() {
         setLaoding(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         setLaoding(false);
       });
   };
