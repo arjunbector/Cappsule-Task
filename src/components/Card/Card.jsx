@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import calculatePrice from "../../utils/calculatePrice";
 import checkPackings from "../../utils/checkPackings";
 import checkStrength from "../../utils/checkStrength";
+import Options from "./Options";
 
 const Card = ({ salt }) => {
   const [selectedForm, setSelctedForm] = useState(
@@ -81,7 +82,7 @@ const Card = ({ salt }) => {
       />
     );
   });
-  const packagings = availablePackaging.map((packing) => {
+  const packings = availablePackaging.map((packing) => {
     if (
       !checkPackings(
         salt.salt_forms_json[selectedForm][selectedStrength][packing]
@@ -116,18 +117,9 @@ const Card = ({ salt }) => {
       className="flex items-center justify-between custom-shadow rounded-lg p-6 bg-gradient-to-r from-white to-primary-aqua to-[450%]"
     >
       <div className="flex flex-col gap-5 w-1/3 text-sm">
-        <div className="flex gap-4">
-          <div>Form:</div>
-          <div className="flex flex-wrap gap-1">{forms}</div>
-        </div>
-        <div className="flex gap-4">
-          <div>Strength:</div>
-          <div className="flex flex-wrap gap-1">{strengths}</div>
-        </div>
-        <div className="flex gap-4">
-          <div>Packaging:</div>
-          <div className="flex flex-wrap gap-1">{packagings}</div>
-        </div>
+        <Options category="Form" options={forms} />
+        <Options category="Strength" options={strengths} />
+        <Options category="Packing" options={packings} />
       </div>
       <div className="w-1/3 text-center">
         <h1 className="font-bold">{salt.salt}</h1>
