@@ -4,16 +4,17 @@ const Capsule = ({ variant, disabled, onClick, text }) => {
       disabled={disabled}
       className={`px-3 rounded-lg font-semibold text-sm
         ${
-          variant === "primary" &&
+          variant === "selected" &&
           "bg-primary custom-shadow-capsule border border-black"
         }
-        ${variant === "selected" && "border-2 border-slate-300"}
+        ${variant === "primary" && "border-2 border-slate-300 text-gray-500"}
         ${
-          variant === "dashed" && "bg-white border-2 border-dashed text-black"
-        }`}
+          variant === "dashed" && "bg-white border-2 border-dashed text-gray-500"
+        }
+        ${variant === "dashedSelected" &&"bg-white border-2 border-gray-500 border-dashed text-black"}`}
       onClick={onClick}
     >
-      {text || "Dumy"}
+      {text || "Not available"}
     </button>
   );
 };

@@ -5,9 +5,13 @@ import Pricing from "./Pricing";
 import { useState } from "react";
 import { useEffect } from "react";
 import calculatePrice from "../../utils/calculatePrice";
+import checkPackings from "../../utils/checkPackings";
+import checkStrength from "../../utils/checkStrength";
 
 const Card = ({ salt }) => {
-  const [selectedForm, setSelctedForm] = useState(Object.keys(salt.salt_forms_json)[0]);
+  const [selectedForm, setSelctedForm] = useState(
+    Object.keys(salt.salt_forms_json)[0]
+  );
   const [selectedStrength, setSelctedStrength] = useState(
     Object.keys(salt.salt_forms_json[selectedForm])[0]
   );
@@ -32,37 +36,78 @@ const Card = ({ salt }) => {
     }
     setAvailablePackaging(availablePackaging);
   }, [selectedForm, selectedStrength, selectedPacking]);
-
+  useEffect(() => {
+    setSelectedPacking(
+      Object.keys(salt.salt_forms_json[selectedForm][selectedStrength])[0]
+    );
+  }, [selectedForm, selectedStrength]);
   const forms = availableForms.map((form) => (
     <Capsule
       key={form}
-      variant={selectedForm === form ? "primary" : "selected"}
+      variant={selectedForm === form ? "selected" : "primary"}
       text={form}
       onClick={() => {
         setSelctedForm(form);
+        setSelctedStrength(Object.keys(salt.salt_forms_json[form])[0]);
       }}
     />
   ));
-  const strengths = availableStrengths.map((strength) => (
-    <Capsule
-      key={strength}
-      variant={selectedStrength === strength ? "primary" : "selected"}
-      text={strength}
-      onClick={() => {
-        setSelctedStrength(strength);
-      }}
-    />
-  ));
-  const packagings = availablePackaging.map((packaging) => (
-    <Capsule
-      key={packaging}
-      variant={packaging === selectedPacking ? "primary" : "selected"}
-      text={packaging}
-      onClick={() => {
-        setSelectedPacking(packaging);
-      }}
-    />
-  ));
+  const strengths = availableStrengths.map((strength) => {
+    if (!checkStrength(salt.salt_forms_json[selectedForm][strength]))
+      return (
+        <Capsule
+          key={strength}
+          variant={selectedStrength === strength ? "dashedSelected" : "dashed"}
+          text={strength}
+          onClick={() => {
+            setSelctedStrength(strength);
+            setSelectedPacking(
+              Object.keys(salt.salt_forms_json[selectedForm][strength])[0]
+            );
+          }}
+        />
+      );
+    return (
+      <Capsule
+        key={strength}
+        variant={selectedStrength === strength ? "selected" : "primary"}
+        text={strength}
+        onClick={() => {
+          setSelctedStrength(strength);
+          setSelectedPacking(
+            Object.keys(salt.salt_forms_json[selectedForm][strength])[0]
+          );
+        }}
+      />
+    );
+  });
+  const packagings = availablePackaging.map((packing) => {
+    if (
+      !checkPackings(
+        salt.salt_forms_json[selectedForm][selectedStrength][packing]
+      )
+    )
+      return (
+        <Capsule
+          key={packing}
+          variant={packing === selectedPacking ? "dashedSelected" : "dashed"}
+          text={packing}
+          onClick={() => {
+            setSelectedPacking(packing);
+          }}
+        />
+      );
+    return (
+      <Capsule
+        key={packing}
+        variant={packing === selectedPacking ? "selected" : "primary"}
+        text={packing}
+        onClick={() => {
+          setSelectedPacking(packing);
+        }}
+      />
+    );
+  });
   return (
     <motion.div
       initial={{ opacity: 0, y: 100 }}
